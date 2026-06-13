@@ -19,8 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
         activityCard.className = "activity-card";
 
         const spotsLeft = details.max_participants - details.participants.length;
+        const escapeHtml = (value) =>
+          String(value).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
         const participantsMarkup = details.participants.length
-          ? details.participants.map((participant) => `<li>${participant}</li>`).join("")
+          ? details.participants
+              .map((participant) => `<li>${escapeHtml(participant)}</li>`)
+              .join("")
           : "<li>No participants yet</li>";
 
         activityCard.innerHTML = `
